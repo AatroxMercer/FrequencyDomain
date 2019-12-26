@@ -1,21 +1,22 @@
 % load data from local file
-num_node = load("./database/node.db");
-    % r c l start end
-z = load("./database/z.db");
-num_z = height(z);
-    % u hiAh low phi
-vs = load("./database/vs.db");
-num_vs = height(vs);
-    % i start end phi
-cs = load("./database/cs.db");
-num_cs = height(cs);
+load("./database/z.db");
+load("./database/vs.db");
+load("./database/cs.db");
+load("./database/num_node.db");
 
-% input the omega of the whole curcuit
+num_z = height(z);
+num_vs = height(vs);
+num_cs = height(cs);
+num = num_vs + num_node;
 omega = readDialog("½ÇËÙ¶È(rad/s)");
 
+
 % Ax = b
-% Aet A matrix
-A = zeros(num_node);
+
+A = zeros(num);
+b = zeros(num, 1);
+
+% Get A matrix
 for i = 1 : 1 : num_z
     r = z(i, 1);
     c = z(i, 2);
@@ -23,25 +24,85 @@ for i = 1 : 1 : num_z
     sp = z(i, 4);
     ep = z(i, 5);
     
-    value = r - 1i/omega/c + 1i*omega*l;
-    value = 1 / value;
+    aij = r + 1i*omega*l;
+    if c ~= 0
+        aij = aij - 1i/omega/c;
+    end
+    aij = 1 / aij;
     
-    A(sp, sp) = A(sp, sp) + value;
-    A(ep, ep) = A(ep, ep) + value;
-    A(sp, ep) = A(sp, ep) - value;
-    A(ep, sp) = A(ep, sp) - value;
+    A(sp, sp) = A(sp, sp) + aij;
+    A(ep, ep) = A(ep, ep) + aij;
+    A(sp, ep) = A(sp, ep) - aij;
+    A(ep, sp) = A(ep, sp) - aij;
 end
 
-for i = 1 : 1 num_vs
+
+%  voltage source operation
+for i = 1 : 1 : num_vs
     u = vs(i, 1);
     hp = vs(i, 2);
     lp = vs(i, 3);
     phi = vs(i, 4);
     u = u*cos(phi) + 1i*u*sin(phi);
     
-    A(hp)
-    
+    m = num_node + i;
+    % I_hl curcuit high -> low
+    A(hp, m) = A(hp, m) + 1;
+    A(lp, m) = A(lp, m) - 1;
+    % U_hl = u_h - u_l
+    A(m, hp) = A(m, hp) + 1;
+    A(m, lp) = A(m, lp) - 1;
+    b(m) = b(m) + u
 end
 
-
 % get b vector
+for j = 1 : 1 : num_cs
+    i = cs(j, 1);
+    sp = cs(j, 2);
+    ep = cs(j, 3);
+    phi = cs(j, 4);
+    
+    i = i*cos(phi) + 1i*i*sin(phi);
+    
+    b(sp) = b(sp) - i;
+    b(ep) = b(ep) + i;
+end
+
+x = linsolve(A(2:num, 2:num), b(2:num));
+
+
+disp(x(1:num-num_vs));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

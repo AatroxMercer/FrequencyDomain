@@ -30,9 +30,7 @@ function pushbutton_input_Callback(hObject, eventdata, handles)
 
 
 function pushbutton_nodeVoltageMethod_Callback(hObject, eventdata, handles) 
-    close();
     nodeVoltageMethod();
 
 function pushbutton_frequencyAnalyze_Callback(hObject, eventdata, handles)
-    close();
     frequencyAnalyze();
