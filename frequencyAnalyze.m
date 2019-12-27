@@ -8,7 +8,7 @@ function [] = frequencyAnalyze(p, omega)
     
     [omega0, omega0_index] = max(abs(u_s2e));
     omega0 = omega(omega0_index);
-    disp(omega0);
+    msgbox("omega0=" + omega0);
     
     amplitude = abs(u_s2e);
     phi = angle(u_s2e) ./ pi * 180;
