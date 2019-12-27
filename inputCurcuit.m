@@ -1,9 +1,9 @@
-function varargout = specifiedInput(varargin)
+function varargout = inputCurcuit(varargin)
     gui_Singleton = 1;
     gui_State = struct('gui_Name',       mfilename, ...
                        'gui_Singleton',  gui_Singleton, ...
-                       'gui_OpeningFcn', @specifiedInput_OpeningFcn, ...
-                       'gui_OutputFcn',  @specifiedInput_OutputFcn, ...
+                       'gui_OpeningFcn', @inputCurcuit_OpeningFcn, ...
+                       'gui_OutputFcn',  @inputCurcuit_OutputFcn, ...
                        'gui_LayoutFcn',  [] , ...
                        'gui_Callback',   []);
     if nargin && ischar(varargin{1})
@@ -17,7 +17,7 @@ function varargout = specifiedInput(varargin)
     end
 
 
-function specifiedInput_OpeningFcn(hObject, eventdata, handles, varargin)
+function inputCurcuit_OpeningFcn(hObject, eventdata, handles, varargin)
     handles.output = hObject;
     
     fopen("./database/z.db", "wt");
@@ -26,12 +26,12 @@ function specifiedInput_OpeningFcn(hObject, eventdata, handles, varargin)
     fopen("./database/num_node.db", "wt");
     
     fprintf(fopen("./database/num_node.db", "a+"), "%d", readDialog(["电路中的结点数量"]));
-    msgbox("电压源低电位端需要接地,其支路为1--num_node(1为负极),限制最多一个无伴电压源,其他电压源请自行转换为等效电流源,");
+    msgbox("默认1为电势零点");
     
     guidata(hObject, handles);
 
 
-function varargout = specifiedInput_OutputFcn(hObject, eventdata, handles) 
+function varargout = inputCurcuit_OutputFcn(hObject, eventdata, handles) 
     varargout{1} = handles.output;
     
 

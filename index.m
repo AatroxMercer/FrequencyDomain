@@ -15,10 +15,8 @@ function varargout = index(varargin)
     else
         gui_mainfcn(gui_State, varargin{:});
     end
-% DO NOT EDIT
 
 
-% --- Executes just before index is made visible.
 function index_OpeningFcn(hObject, eventdata, handles, varargin)
     handles.output = hObject;
     guidata(hObject, handles);
@@ -27,11 +25,15 @@ function index_OpeningFcn(hObject, eventdata, handles, varargin)
 function varargout = index_OutputFcn(hObject, eventdata, handles) 
     varargout{1} = handles.output;
 
+    
+function pushbutton_input_Callback(hObject, eventdata, handles)
+    specifiedInput();
 
-function pushbutton_specified_Callback(hObject, eventdata, handles)
-    close;
-    specified();
 
-function pushbutton_classic_Callback(hObject, eventdata, handles)
-    close;
-    classic();
+function pushbutton_nodeVoltageMethod_Callback(hObject, eventdata, handles) 
+    omega = readDialog("½ÇËÙ¶È(rad/s)");
+    nodeVoltageMethod(omega);
+
+    
+function pushbutton_frequencyAnalyze_Callback(hObject, eventdata, handles)
+    frequencyAnalyze();
