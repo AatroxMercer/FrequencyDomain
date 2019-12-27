@@ -76,4 +76,6 @@ function [x] = nodeVoltageMethod(omega)
     for i = 2 : 1 : num_node
         fprintf(file_x, "%d: %f\n", [i, x(i-1)]);
     end
+    
+    fclose(file_x);
 end

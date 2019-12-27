@@ -27,7 +27,7 @@ function varargout = index_OutputFcn(hObject, eventdata, handles)
 
     
 function pushbutton_input_Callback(hObject, eventdata, handles)
-    specifiedInput();
+    inputCurcuit();
 
 
 function pushbutton_nodeVoltageMethod_Callback(hObject, eventdata, handles) 
@@ -36,4 +36,8 @@ function pushbutton_nodeVoltageMethod_Callback(hObject, eventdata, handles)
 
     
 function pushbutton_frequencyAnalyze_Callback(hObject, eventdata, handles)
-    frequencyAnalyze();
+    p = readDialog(["start", "end"]);
+    omega = readDialog(["max omega", "min omega"]);
+    close;
+    frequencyAnalyze(p, omega);
+    
