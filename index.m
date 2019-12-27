@@ -36,8 +36,8 @@ function pushbutton_nodeVoltageMethod_Callback(hObject, eventdata, handles)
 
     
 function pushbutton_frequencyAnalyze_Callback(hObject, eventdata, handles)
-    p = readDialog(["start", "end"]);
-    omega = readDialog(["max omega", "min omega"]);
+    p = readDialog(["start", "end"])
+    omega = readDialog(["min omega", "max omega"])
     close;
     frequencyAnalyze(p, omega);
     

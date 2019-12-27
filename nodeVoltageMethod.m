@@ -70,6 +70,8 @@ function [x] = nodeVoltageMethod(omega)
     x = linsolve(A(2:num, 2:num), b(2:num));
     x = [0;x(1 : num_node-1)];
     
+    disp(x);
+    
     file_x = fopen("./database/node_voltage.db", "wt");
     fprintf(file_x, "1: 0\n");
     
